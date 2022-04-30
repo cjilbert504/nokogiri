@@ -144,6 +144,10 @@ module Nokogiri
         document.fragment(data)
       end
 
+      def deconstruct
+        children.to_a
+      end
+
       private
 
       # fix for issue 770

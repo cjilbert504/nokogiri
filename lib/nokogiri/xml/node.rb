@@ -1310,6 +1310,19 @@ module Nokogiri
         end
       end
 
+      DECONSTRUCT_KEYS = [:name, :attributes, :children, :namespace, :content, :elements, :inner_html].freeze
+      DECONSTRUCT_METHODS = { attributes: :attribute_nodes }.freeze
+
+      def deconstruct_keys(keys)
+        requested_keys = DECONSTRUCT_KEYS & keys
+        {}.tap do |values|
+          requested_keys.each do |key|
+            method = DECONSTRUCT_METHODS[key] || key
+            values[key] = send(method)
+          end
+        end
+      end
+
       # :section:
 
       protected
